@@ -14,6 +14,7 @@ public class QadmaApplication {
 
 	@Bean
 	public ModelMapper modelMapper(){
+
 		return new ModelMapper();
 	}
 }
