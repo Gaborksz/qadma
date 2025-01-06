@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,13 +14,12 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 
+
 @Entity
-@Table(name = "inspection_plan")
 public class InspectionPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
 
     @Column(name = "revision")
@@ -37,17 +37,18 @@ public class InspectionPlan {
     @Column(name = "modified_by")
     private long modifiedBy;
 
-    @Column(name = "status")
-    private String status;
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "inspection_plan_id_inspection_template_id",
             joinColumns = @JoinColumn(name = "inspection_plan_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "inspection_template_id", referencedColumnName = "id"))
     @MapKeyColumn(name = "sequence_number")
     Map<Integer, InspectionTemplate> templateSequence;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "inspection_plan_id")
-    Set<InspectionPlanChangeNote> inspectionPlanChangeNotes;
+    @OneToMany(mappedBy = "inspectionPlan")
+    Set<InspectionPlanChangeNote> changeNotes;
+
+    public void addSequence(int sequenceNumber, InspectionTemplate inspectionTemplate) {
+        if (templateSequence == null) templateSequence = new HashMap<>();
+        templateSequence.put(sequenceNumber, inspectionTemplate);
+    }
 }

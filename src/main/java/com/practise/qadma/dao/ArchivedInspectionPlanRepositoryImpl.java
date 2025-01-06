@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ArchivedInspectionPlanRepositoryImpl implements ArchivedInspectionPlanRepository{
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public ArchivedInspectionPlanRepositoryImpl(EntityManager entityManager) {

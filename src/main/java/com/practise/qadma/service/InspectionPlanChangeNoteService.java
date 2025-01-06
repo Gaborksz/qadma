@@ -1,11 +1,10 @@
 package com.practise.qadma.service;
 
-import com.practise.qadma.payload.changenote.InspectionPlanChangeNoteDTO;
-
-import java.util.List;
-
+import com.practise.qadma.entity.InspectionPlanChangeNote;
 
 public interface InspectionPlanChangeNoteService {
 
-    List<InspectionPlanChangeNoteDTO> save(InspectionPlanChangeNoteDTO inspectionPlanChangeNoteDTO);
+    InspectionPlanChangeNote findById(long id);
+
+    InspectionPlanChangeNote save(InspectionPlanChangeNote changeNote);
 }

@@ -1,14 +1,18 @@
 package com.practise.qadma.service;
 
-import com.practise.qadma.payload.ProductDTO;
-import org.springframework.stereotype.Service;
+import com.practise.qadma.entity.Product;
 
-import java.util.List;
+import java.util.Set;
 
-@Service
 public interface ProductService {
 
-    List<ProductDTO> findAll();
+    Product findById(long id);
 
-    void updateProduct(long id, ProductDTO productDTO);
+    Set<Product> getProductsByInspectionTemplateId(long id);
+
+    Product findByInspectionPlanId(long inspectionPlanId);
+
+    Product save(Product product);
+
+    Product update(Product updateProduct);
 }

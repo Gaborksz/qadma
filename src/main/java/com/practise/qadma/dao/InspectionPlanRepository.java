@@ -10,5 +10,7 @@ public interface InspectionPlanRepository {
 
     InspectionPlan save(InspectionPlan inspectionPlan);
 
-    InspectionPlan update(InspectionPlan inspectionPlan);
+    InspectionPlan update (InspectionPlan inspectionPlan);
+
+    InspectionPlan finByProductId(long productId);
 }

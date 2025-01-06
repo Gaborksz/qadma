@@ -4,5 +4,7 @@ import com.practise.qadma.entity.InspectionPlanChangeNote;
 
 public interface InspectionPlanChangeNoteRepository {
 
-    InspectionPlanChangeNote save(InspectionPlanChangeNote inspectionPlanChangeNote);
+    InspectionPlanChangeNote findById(long id);
+
+    InspectionPlanChangeNote save(InspectionPlanChangeNote changeNote);
 }

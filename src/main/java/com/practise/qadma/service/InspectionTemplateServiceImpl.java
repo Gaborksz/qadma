@@ -2,7 +2,9 @@ package com.practise.qadma.service;
 
 import com.practise.qadma.dao.InspectionTemplateRepository;
 import com.practise.qadma.entity.InspectionTemplate;
-import com.practise.qadma.payload.inspectiontemplate.InspectionTemplateDTO;
+import com.practise.qadma.exception.ItemNotFoundException;
+import com.practise.qadma.payload.InspectionTemplateDTO;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,28 +15,30 @@ import java.util.Optional;
 public class InspectionTemplateServiceImpl implements InspectionTemplateService {
 
     private InspectionTemplateRepository inspectionTemplateRepository;
-    private ModelMapper modelMapper;
 
     @Autowired
-    public InspectionTemplateServiceImpl(InspectionTemplateRepository inspectionTemplateRepository, ModelMapper modelMapper) {
+    public InspectionTemplateServiceImpl(InspectionTemplateRepository inspectionTemplateRepository) {
         this.inspectionTemplateRepository = inspectionTemplateRepository;
-        this.modelMapper = modelMapper;
+
     }
 
     @Override
-    public InspectionTemplateDTO findById(long id) {
-        return modelMapper.map(inspectionTemplateRepository.findById(id), InspectionTemplateDTO.class);
+    public InspectionTemplate findById(long id) {
+
+        return inspectionTemplateRepository.findById(id)
+                .orElseThrow(()-> new ItemNotFoundException(id,InspectionTemplate.class.getName()));
     }
 
+    @Transactional
     @Override
-    public InspectionTemplateDTO save(InspectionTemplateDTO templateDTO) {
+    public InspectionTemplate save(InspectionTemplate template) {
 
-        Optional<InspectionTemplate> managedTemplate = inspectionTemplateRepository.findById(templateDTO.getId());
+        return inspectionTemplateRepository.save(template);
+    }
 
-        if (managedTemplate.isPresent()) return templateDTO;
-
-        InspectionTemplate savedTemplate = inspectionTemplateRepository.saveNewOrGetExisting(modelMapper.map(templateDTO, InspectionTemplate.class));
-
-        return modelMapper.map(savedTemplate, InspectionTemplateDTO.class);
+    @Transactional
+    @Override
+    public InspectionTemplate update(InspectionTemplate inspectionTemplate) {
+        return inspectionTemplateRepository.update(inspectionTemplate);
     }
 }

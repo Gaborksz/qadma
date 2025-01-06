@@ -1,5 +1,7 @@
 package com.practise.qadma.dao;
 
+import com.practise.qadma.entity.ArchivedInspectionPlan;
+import com.practise.qadma.entity.InspectionPlan;
 import com.practise.qadma.entity.InspectionPlanChangeNote;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +10,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class InspectionPlanChangeNoteRepositoryImpl implements InspectionPlanChangeNoteRepository {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public InspectionPlanChangeNoteRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
+
     @Override
-    public InspectionPlanChangeNote save(InspectionPlanChangeNote inspectionPlanChangeNote) {
+    public InspectionPlanChangeNote findById(long id) {
 
-        entityManager.persist(inspectionPlanChangeNote);
+//        TODO
+        return null;
+    }
 
-        return inspectionPlanChangeNote;
+    @Override
+    public InspectionPlanChangeNote save(InspectionPlanChangeNote changeNote) {
+        entityManager.persist(changeNote);
+        return changeNote;
     }
 }
 

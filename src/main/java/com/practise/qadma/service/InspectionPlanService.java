@@ -1,13 +1,15 @@
 package com.practise.qadma.service;
 
-import com.practise.qadma.exception.ItemNotFoundException;
-import com.practise.qadma.payload.inspectionplan.InspectionPlanDTO;
+import com.practise.qadma.entity.InspectionPlan;
 
 public interface InspectionPlanService {
 
-    InspectionPlanDTO findById(long id) throws ItemNotFoundException;
+    InspectionPlan findById(long id);
 
-    InspectionPlanDTO save(InspectionPlanDTO inspectionPlanDTO);
+    InspectionPlan save( InspectionPlan inspectionPlan);
 
-    InspectionPlanDTO update(InspectionPlanDTO updateDTO);
+    InspectionPlan update(InspectionPlan inspectionPlan);
+
+    InspectionPlan findByProductId(long productId
+    );
 }

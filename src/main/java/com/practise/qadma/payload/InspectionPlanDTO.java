@@ -1,7 +1,5 @@
-package com.practise.qadma.payload.inspectionplan;
+package com.practise.qadma.payload;
 
-import com.practise.qadma.payload.inspectiontemplate.InspectionTemplateDTO;
-import com.practise.qadma.payload.changenote.InspectionPlanChangeNoteRecordDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,20 +14,11 @@ import java.util.Set;
 public class InspectionPlanDTO {
 
     private long id;
-
     private int revision;
-
     private Date dateCreated;
-
     private Date dateModified;
-
     private long createdBy;
-
     private long modifiedBy;
-
-    private String status;
-
     Map<Integer, InspectionTemplateDTO> templateSequence;
-
-    Set<InspectionPlanChangeNoteRecordDTO> changeNotes;
+    Set<InspectionPlanChangeNoteDTO> changeNotes;
 }

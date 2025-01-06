@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public class InspectionTemplateRepositoryImpl implements InspectionTemplateRepository {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
 
     @Autowired
@@ -25,13 +25,14 @@ public class InspectionTemplateRepositoryImpl implements InspectionTemplateRepos
     }
 
     @Override
-    public InspectionTemplate saveNewOrGetExisting(InspectionTemplate inspectionTemplate) {
-
-        Optional<InspectionTemplate> managedTemplate = findById(inspectionTemplate.getId());
-
-        if (managedTemplate.isPresent()) return managedTemplate.get();
+    public InspectionTemplate save(InspectionTemplate inspectionTemplate) {
 
         entityManager.persist(inspectionTemplate);
         return inspectionTemplate;
+    }
+
+    @Override
+    public InspectionTemplate update(InspectionTemplate inspectionTemplate) {
+        return entityManager.merge(inspectionTemplate);
     }
 }

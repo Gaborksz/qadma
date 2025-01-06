@@ -1,35 +1,31 @@
 package com.practise.qadma.controller;
 
+import com.practise.qadma.conversion.ProductConversionService;
 import com.practise.qadma.payload.ProductDTO;
-import com.practise.qadma.service.ProductService;
+import com.practise.qadma.payload.view.ProductViewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
 
-    private ProductService productService;
-
+    private final ProductConversionService productConversionService;
 
     @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public ProductController(ProductConversionService productConversionService) {
+        this.productConversionService = productConversionService;
     }
 
-    @GetMapping
-    public List<ProductDTO> findAll() {
+    @GetMapping("/{id}")
+    public ProductViewDTO findById(@PathVariable long id) {
 
-        return productService.findAll();
+        return productConversionService.findById(id);
     }
 
-    @PutMapping("{id}")
-    public void updateProduct (@PathVariable long id,
-                                            @RequestBody ProductDTO productDTO) {
+    @PostMapping()
+    public ProductViewDTO save(@RequestBody ProductDTO productDTO) {
 
-        productService.updateProduct(id, productDTO);
+        return productConversionService.save(productDTO);
     }
-
 }

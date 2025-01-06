@@ -1,26 +1,26 @@
-package com.practise.qadma.payload.inspectiontemplate;
+package com.practise.qadma.payload.view;
+
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class InspectionTemplateDTO {
+
+public class ProductViewDTO {
 
     private long id;
-    private String title;
+    private int partNumber;
+    private String name;
     private int revision;
     private Date dateCreated;
     private Date dateModified;
     private long createdBy;
     private long modifiedBy;
-    private boolean attributeInspection;
-    private String specificationDescription;
-    private int specificationValue;
-    private int plusTolerance;
-    private int minusTolerance;
+    private long inspectionPlanId;
 }

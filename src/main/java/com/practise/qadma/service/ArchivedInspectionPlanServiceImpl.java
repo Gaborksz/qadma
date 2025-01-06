@@ -1,31 +1,43 @@
 package com.practise.qadma.service;
 
-import com.practise.qadma.dao.ArchivedInspectionPlanRepository;
 import com.practise.qadma.entity.ArchivedInspectionPlan;
+import com.practise.qadma.entity.ArchivedInspectionTemplate;
 import com.practise.qadma.entity.InspectionPlan;
-import org.modelmapper.ModelMapper;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @Service
-public class ArchivedInspectionPlanServiceImpl implements ArchivedInspectionPlanService{
+public class ArchivedInspectionPlanServiceImpl implements ArchivedInspectionPlanService {
+
+    private ArchivedInspectionTemplateService archivedInspectionTemplateService;
 
     @Autowired
-    private ArchivedInspectionPlanRepository archivedInspectionPlanRepository;
-    private ModelMapper modelMapper;
-
-    public ArchivedInspectionPlanServiceImpl(ArchivedInspectionPlanRepository archivedInspectionPlanRepository, ModelMapper modelMapper) {
-        this.archivedInspectionPlanRepository = archivedInspectionPlanRepository;
-        this.modelMapper = modelMapper;
+    public ArchivedInspectionPlanServiceImpl(ArchivedInspectionTemplateService archivedInspectionTemplateService) {
+        this.archivedInspectionTemplateService = archivedInspectionTemplateService;
     }
 
+    @Transactional
     @Override
-    public ArchivedInspectionPlan save(InspectionPlan inspectionPlan) {
+    public ArchivedInspectionPlan archiveInspectionPlan(InspectionPlan inspectionPlan) {
 
-        ArchivedInspectionPlan archivedInspectionPlan = modelMapper.map(inspectionPlan, ArchivedInspectionPlan.class);
+        ArchivedInspectionPlan archivedInspectionPlan = new ArchivedInspectionPlan();
         archivedInspectionPlan.setId(0);
-        archivedInspectionPlan.getTemplateSequence().entrySet().forEach(e-> e.getValue().setId(0));
+        archivedInspectionPlan.setRevision(inspectionPlan.getRevision());
+        archivedInspectionPlan.setDateCreated(inspectionPlan.getDateModified());
+        archivedInspectionPlan.setCreatedBy(inspectionPlan.getModifiedBy());
 
-        return archivedInspectionPlanRepository.save(archivedInspectionPlan);
+        Map<Integer, ArchivedInspectionTemplate> archiveTemplateSequence = inspectionPlan.getTemplateSequence()
+                .entrySet().stream().collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> archivedInspectionTemplateService.getLatestArchiveForInspectionTemplate(entry.getValue().getId()))
+                );
+
+        archivedInspectionPlan.setTemplateSequence(archiveTemplateSequence);
+
+        return archivedInspectionPlan;
     }
 }

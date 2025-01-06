@@ -13,13 +13,10 @@ import java.util.Map;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "archived_inspection_plan")
 public class ArchivedInspectionPlan {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
 
     @Column(name = "revision")
@@ -31,13 +28,10 @@ public class ArchivedInspectionPlan {
     @Column(name = "created_by")
     private long createdBy;
 
-    @Column(name = "status")
-    private String status;
-
     @ManyToMany(cascade = CascadeType.PERSIST)
-    @JoinTable(name = "archived_insp_plan_id_archived_insp_template_id",
-            joinColumns = @JoinColumn(name = "archived_inspection_plan_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "archived_inspection_template_id", referencedColumnName = "id"))
+    @JoinTable(name = "archived_plan_id_archived_template_id",
+            joinColumns = @JoinColumn(name = "archived_plan_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "archived_template_id", referencedColumnName = "id"))
     @MapKeyColumn(name = "sequence_number")
     Map<Integer, ArchivedInspectionTemplate> templateSequence;
 }

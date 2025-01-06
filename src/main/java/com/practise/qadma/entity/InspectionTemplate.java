@@ -36,9 +36,6 @@ public class InspectionTemplate {
     @Column(name = "created_by")
     private long createdBy;
 
-    @Column(name = "modified_by")
-    private long modifiedBy;
-
     @Column(name = "attribute_inspection")
     private boolean attributeInspection;
 
@@ -53,4 +50,7 @@ public class InspectionTemplate {
 
     @Column(name = "minus_tolerance")
     private int minusTolerance;
+
+    @OneToMany(mappedBy = "inspectionTemplate")
+    Set<InspectionTemplateChangeNote> changeNotes;
 }

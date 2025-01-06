@@ -2,11 +2,18 @@ package com.practise.qadma.dao;
 
 import com.practise.qadma.entity.Product;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public interface ProductRepository {
 
-    List<Product> findAll();
+    Optional<Product> findById(long id);
 
-    void updateProduct(long id, Product product);
+    Set<Product> getProductsByInspectionTemplateId(long id);
+
+    Product findByInspectionPlanId(long inspectionPlanId);
+
+    Product save(Product product);
+
+    Product update(Product updatedProduct);
 }

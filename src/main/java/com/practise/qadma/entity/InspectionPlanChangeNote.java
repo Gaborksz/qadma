@@ -6,13 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 
 @Entity
-@Table(name = "change_note")
+@Table(name = "inspection_plan_change_note")
 public class InspectionPlanChangeNote {
 
     @Id
@@ -20,7 +22,7 @@ public class InspectionPlanChangeNote {
     private long id;
 
     @Column(name = "description")
-    private String description;
+    private String changeDescription;
 
     @Column(name = "createdBy")
     private long createdBy;
@@ -28,11 +30,36 @@ public class InspectionPlanChangeNote {
     @Column(name = "date_created")
     private Date dateCreated;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "inspection_plan_id")
     private InspectionPlan inspectionPlan;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "archived_inspection_plan_id")
     private ArchivedInspectionPlan archivedInspectionPlan;
+
+    @ManyToMany
+    @JoinTable(name = "plan_change_note_id_template_change_note_id",
+            joinColumns = @JoinColumn(name = "plan_change_note_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "template_change_note_id", referencedColumnName = "id"))
+    private Set<InspectionTemplateChangeNote> templateChangeNotes;
+
+
+    public void addTemplateChangeNote(InspectionTemplateChangeNote inspectionTemplateChangeNote) {
+        if (templateChangeNotes == null) templateChangeNotes = new HashSet<>();
+        templateChangeNotes.add(inspectionTemplateChangeNote);
+
+        Set<InspectionPlanChangeNote> inspectionPlanChangeNotes = inspectionTemplateChangeNote.getInspectionPlanChangeNotes();
+
+        if (inspectionPlanChangeNotes == null || !inspectionPlanChangeNotes.contains(this)) {
+            inspectionTemplateChangeNote.addInspectionPlanChangeNote(this);
+        }
+    }
+
+    public void addTextToChangeDescription(String changeDescription) {
+
+        if (this.changeDescription == null) this.changeDescription = "";
+
+        this.changeDescription = this.changeDescription + "\n" + changeDescription;
+    }
 }

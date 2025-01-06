@@ -1,7 +1,5 @@
-package com.practise.qadma.payload.changenote;
+package com.practise.qadma.payload;
 
-import com.practise.qadma.payload.ProductDTO;
-import com.practise.qadma.payload.inspectiontemplate.InspectionTemplateDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class InspectionTemplateChangeNoteDTO extends ChangeNoteDTO {
 
+    private int templateSequenceNumber;
     private InspectionTemplateDTO inspectionTemplate;
-
-    private Set<ProductDTO> products;
+    private Set<ProductDTO> productsToUpdate;
 }

@@ -1,11 +1,12 @@
 package com.practise.qadma.service;
 
-import com.practise.qadma.payload.inspectiontemplate.InspectionTemplateDTO;
+import com.practise.qadma.entity.InspectionTemplate;
 
 public interface InspectionTemplateService {
 
-    InspectionTemplateDTO findById(long id);
+    InspectionTemplate findById(long id);
 
-    InspectionTemplateDTO save(InspectionTemplateDTO templateDTO);
+    InspectionTemplate save(InspectionTemplate template);
 
+    InspectionTemplate update(InspectionTemplate inspectionTemplate);
 }

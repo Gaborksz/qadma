@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,7 +16,8 @@ import lombok.Setter;
 @Table(name = "product")
 public class Product {
 
-    @Id     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -26,7 +30,22 @@ public class Product {
     @Column(name = "revision")
     private int revision;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumns(@JoinColumn(name = "inspection_plan_id"))
+    @Column(name = "date_created")
+    private Date dateCreated;
+
+    @Column(name = "date_modified")
+    private Date dateModified;
+
+    @Column(name = "created_by")
+    private long createdBy;
+
+    @Column(name = "modified_by")
+    private long modifiedBy;
+
+    @OneToOne
+    @JoinColumn(name = "inspection_plan_id")
     private InspectionPlan inspectionPlan;
+
+    @OneToMany(mappedBy = "product")
+    private Set<ProductChangeNote> productChangeNotes;
 }

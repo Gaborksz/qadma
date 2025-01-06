@@ -1,35 +1,32 @@
 package com.practise.qadma.controller;
 
-import com.practise.qadma.payload.inspectionplan.InspectionPlanDTO;
+import com.practise.qadma.conversion.InspectionPlanConversionService;
+import com.practise.qadma.payload.InspectionPlanDTO;
+import com.practise.qadma.payload.view.InspectionPlanViewDTO;
 import com.practise.qadma.service.InspectionPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/inspectionplan")
+@RequestMapping("api/inspection-plan")
 public class InspectionPlanController {
 
-    private InspectionPlanService inspectionPlanService;
+    private InspectionPlanConversionService inspectionPlanConversionService;
 
 
     @Autowired
-    public InspectionPlanController(InspectionPlanService inspectionPlanService) {
-        this.inspectionPlanService = inspectionPlanService;
+    public InspectionPlanController(InspectionPlanConversionService inspectionPlanConversionService) {
+        this.inspectionPlanConversionService = inspectionPlanConversionService;
     }
 
 
     @GetMapping("/{id}")
-    public InspectionPlanDTO findInspectionPlan(@PathVariable long id) {
-        return inspectionPlanService.findById(id);
+    public InspectionPlanViewDTO findInspectionPlan(@PathVariable long id) {
+        return inspectionPlanConversionService.findById(id);
     }
 
     @PostMapping
-    public InspectionPlanDTO createInspectionPlan(@RequestBody InspectionPlanDTO inspectionPlanDTO) {
-        return inspectionPlanService.save(inspectionPlanDTO);
-    }
-
-    @PutMapping("/{id}")
-    public InspectionPlanDTO updateInspectionPlan(@RequestBody InspectionPlanDTO inspectionPlanUpdateDTO) {
-        return inspectionPlanService.update(inspectionPlanUpdateDTO);
+    public  InspectionPlanViewDTO save( @RequestBody InspectionPlanDTO inspectionPlanDTO) {
+        return inspectionPlanConversionService.save(inspectionPlanDTO);
     }
 }

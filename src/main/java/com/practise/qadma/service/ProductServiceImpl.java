@@ -1,40 +1,55 @@
 package com.practise.qadma.service;
 
 import com.practise.qadma.dao.ProductRepository;
-import com.practise.qadma.payload.ProductDTO;
-import org.modelmapper.ModelMapper;
+import com.practise.qadma.entity.Product;
+import com.practise.qadma.exception.ItemNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
-    private ModelMapper modelMapper;
+
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper) {
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.modelMapper = modelMapper;
     }
 
 
     @Override
-    public List<ProductDTO> findAll() {
+    public Product findById(long id) {
 
-        return productRepository.findAll().stream()
-                .map(p-> modelMapper.map(p, ProductDTO.class))
-                .collect(Collectors.toList());
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ItemNotFoundException(id, "Product"));
     }
+
+
+    @Override
+    public Product findByInspectionPlanId(long inspectionPlanId) {
+        return productRepository.findByInspectionPlanId(inspectionPlanId);
+    }
+
+
+    @Override
+    public Set<Product> getProductsByInspectionTemplateId(long id) {
+        return productRepository.getProductsByInspectionTemplateId(id);
+    }
+
+
+    @Override
+    public Product save(Product product) {
+        return productRepository.save(product);
+    }
+
 
     @Transactional
     @Override
-    public void updateProduct(long id, ProductDTO productDTO) {
-
-        //TODO
+    public Product update(Product updatedProduct) {
+        return productRepository.update(updatedProduct);
     }
 }

@@ -1,17 +1,18 @@
 package com.practise.qadma.entity;
 
-import com.practise.qadma.payload.ProductDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
+
 
 @Entity
 @Table(name = "InspectionTemplateChangeNote")
@@ -27,8 +28,11 @@ public class InspectionTemplateChangeNote {
     @Column(name = "date_created")
     private Date dateCreated;
 
-    @Column(name = "change_description")
+    @Column(name = "description")
     private String changeDescription;
+
+    @ManyToMany(mappedBy = "templateChangeNotes")
+    Set<InspectionPlanChangeNote> inspectionPlanChangeNotes;
 
     @OneToOne
     @JoinColumn(name = "inspection_template_id")
@@ -37,4 +41,23 @@ public class InspectionTemplateChangeNote {
     @OneToOne
     @JoinColumn(name = "archived_inspection_template_id")
     private ArchivedInspectionTemplate archivedInspectionTemplate;
+
+    @Transient
+    private Set<Product> productsToUpdate;
+
+    @Transient
+    private int templateSequenceNumber;
+
+
+    public void addInspectionPlanChangeNote(InspectionPlanChangeNote inspectionPlanChangeNote) {
+
+        if (inspectionPlanChangeNotes == null) inspectionPlanChangeNotes = new HashSet<>();
+        inspectionPlanChangeNotes.add(inspectionPlanChangeNote);
+
+        Set<InspectionTemplateChangeNote> inspectionTemplateChangeNotes = inspectionPlanChangeNote.getTemplateChangeNotes();
+
+        if (inspectionTemplateChangeNotes == null || !inspectionTemplateChangeNotes.contains(this)) {
+            inspectionPlanChangeNote.addTemplateChangeNote(this);
+        }
+    }
 }

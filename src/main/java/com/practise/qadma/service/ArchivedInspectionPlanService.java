@@ -6,5 +6,5 @@ import com.practise.qadma.entity.InspectionPlan;
 
 public interface ArchivedInspectionPlanService {
 
-    ArchivedInspectionPlan save(InspectionPlan inspectionPlan);
+    ArchivedInspectionPlan archiveInspectionPlan(InspectionPlan inspectionPlan);
 }

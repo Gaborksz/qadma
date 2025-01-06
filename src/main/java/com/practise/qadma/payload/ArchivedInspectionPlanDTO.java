@@ -1,6 +1,5 @@
-package com.practise.qadma.payload.inspectionplan;
+package com.practise.qadma.payload;
 
-import com.practise.qadma.payload.inspectiontemplate.ArchivedInspectionTemplateDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,14 +13,8 @@ import java.util.Map;
 public class ArchivedInspectionPlanDTO {
 
     private long id;
-
     private int revision;
-
     private Date dateCreated;
-
     private long createdBy;
-
-    private String status;
-
     Map<Integer, ArchivedInspectionTemplateDTO> templateSequence;
 }
