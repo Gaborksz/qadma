@@ -1,4 +1,4 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 import com.practise.qadma.entity.InspectionPlanChangeNote;
 import com.practise.qadma.entity.Product;
@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ChangeManagerConversionServiceImpl implements ChangeManagerConversionService {
+public class ChangeManagerMappingServiceImpl implements ChangeManagerMappingService {
 
     private final ModelMapper modelMapper;
     private final InspectionPlanChangeManager inspectionPlanChangeManager;
@@ -27,7 +27,7 @@ public class ChangeManagerConversionServiceImpl implements ChangeManagerConversi
     private final ProductChangeNoteService productChangeNoteService;
 
     @Autowired
-    public ChangeManagerConversionServiceImpl(ModelMapper modelMapper, InspectionPlanChangeManager inspectionPlanChangeManager, ProductChangeManager productChangeManager, ProductChangeNoteService productChangeNoteService) {
+    public ChangeManagerMappingServiceImpl(ModelMapper modelMapper, InspectionPlanChangeManager inspectionPlanChangeManager, ProductChangeManager productChangeManager, ProductChangeNoteService productChangeNoteService) {
         this.modelMapper = modelMapper;
         this.inspectionPlanChangeManager = inspectionPlanChangeManager;
         this.productChangeManager = productChangeManager;

@@ -1,4 +1,4 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 import com.practise.qadma.entity.InspectionPlanChangeNote;
 import com.practise.qadma.payload.view.InspectionPlanChangeNoteViewDTO;
@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InspectionPlanChangeNoteConversionServiceImpl implements InspectionPlanChangeNoteConversionService {
+public class InspectionPlanChangeNoteMappingServiceImpl implements InspectionPlanChangeNoteMappingService {
 
     private ModelMapper modelMapper;
     private InspectionPlanChangeNoteService inspectionPlanChangeNoteService;
 
     @Autowired
-    public InspectionPlanChangeNoteConversionServiceImpl(ModelMapper modelMapper, InspectionPlanChangeNoteService inspectionPlanChangeNoteService) {
+    public InspectionPlanChangeNoteMappingServiceImpl(ModelMapper modelMapper, InspectionPlanChangeNoteService inspectionPlanChangeNoteService) {
         this.modelMapper = modelMapper;
         this.inspectionPlanChangeNoteService = inspectionPlanChangeNoteService;
     }

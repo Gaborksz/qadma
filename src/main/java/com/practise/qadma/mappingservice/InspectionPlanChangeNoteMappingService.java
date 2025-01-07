@@ -1,8 +1,8 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 import com.practise.qadma.payload.view.InspectionPlanChangeNoteViewDTO;
 
-public interface InspectionPlanChangeNoteConversionService {
+public interface InspectionPlanChangeNoteMappingService {
 
     InspectionPlanChangeNoteViewDTO findById(long id);
 }

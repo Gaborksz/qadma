@@ -1,4 +1,4 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 
 import com.practise.qadma.entity.InspectionPlan;
@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InspectionPlanConversionServiceImpl implements InspectionPlanConversionService {
+public class InspectionPlanMappingServiceImpl implements InspectionPlanMappingService {
 
     private ModelMapper modelMapper;
     private InspectionPlanService inspectionPlanService;
 
 
     @Autowired
-    public InspectionPlanConversionServiceImpl(InspectionPlanService inspectionPlanService, ModelMapper modelMapper) {
+    public InspectionPlanMappingServiceImpl(InspectionPlanService inspectionPlanService, ModelMapper modelMapper) {
         this.inspectionPlanService = inspectionPlanService;
         this.modelMapper = modelMapper;
     }

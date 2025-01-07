@@ -1,4 +1,4 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 import com.practise.qadma.entity.Product;
 import com.practise.qadma.payload.ProductDTO;
@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductConversionServiceImpl implements ProductConversionService {
+public class ProductMappingServiceImpl implements ProductMappingService {
 
     private final ProductService productService;
     private ModelMapper modelMapper;
 
     @Autowired
-    public ProductConversionServiceImpl(ProductService productService, ModelMapper modelMapper) {
+    public ProductMappingServiceImpl(ProductService productService, ModelMapper modelMapper) {
         this.productService = productService;
         this.modelMapper = modelMapper;
     }

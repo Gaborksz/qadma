@@ -1,10 +1,10 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 import com.practise.qadma.payload.InspectionPlanDTO;
 import com.practise.qadma.payload.view.InspectionPlanViewDTO;
 
 
-public interface InspectionPlanConversionService {
+public interface InspectionPlanMappingService {
 
     InspectionPlanViewDTO findById(long id);
 

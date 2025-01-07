@@ -1,6 +1,6 @@
 package com.practise.qadma.controller;
 
-import com.practise.qadma.conversion.ChangeManagerConversionService;
+import com.practise.qadma.mappingservice.ChangeManagerMappingService;
 import com.practise.qadma.payload.InspectionPlanChangeNoteDTO;
 import com.practise.qadma.payload.ProductChangeNoteDTO;
 import com.practise.qadma.payload.view.InspectionPlanChangeNoteViewDTO;
@@ -14,31 +14,31 @@ import java.util.List;
 @RequestMapping("/api/change-note")
 public class ChangeManagerController {
 
-    private final ChangeManagerConversionService changeManagerConversionService;
+    private final ChangeManagerMappingService changeManagerMappingService;
 
     @Autowired
-    public ChangeManagerController(ChangeManagerConversionService changeManagerConversionService) {
-        this.changeManagerConversionService = changeManagerConversionService;
+    public ChangeManagerController(ChangeManagerMappingService changeManagerMappingService) {
+        this.changeManagerMappingService = changeManagerMappingService;
     }
 
     @PostMapping("/inspection-plan")
     public List<InspectionPlanChangeNoteViewDTO> processInspectionPlanChangeNote(
             @RequestBody InspectionPlanChangeNoteDTO inspectionPlanChangeNoteDTO) {
 
-        return changeManagerConversionService.processInspectionPlanChangeNote(inspectionPlanChangeNoteDTO);
+        return changeManagerMappingService.processInspectionPlanChangeNote(inspectionPlanChangeNoteDTO);
     }
 
     @PostMapping("/product")
     public List<ProductChangeNoteViewDTO> processProductChangeNote(
             @RequestBody ProductChangeNoteDTO productChangeNoteDTO) {
 
-        return changeManagerConversionService.processProductChangeNote(productChangeNoteDTO);
+        return changeManagerMappingService.processProductChangeNote(productChangeNoteDTO);
     }
 
     @GetMapping("product/{id}")
     public  ProductChangeNoteViewDTO getProductChangeNote(
             @PathVariable long id) {
 
-        return  changeManagerConversionService.getProductChangeNote(id);
+        return  changeManagerMappingService.getProductChangeNote(id);
     }
 }

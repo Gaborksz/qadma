@@ -1,4 +1,4 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 import com.practise.qadma.payload.InspectionPlanChangeNoteDTO;
 import com.practise.qadma.payload.ProductChangeNoteDTO;
@@ -7,7 +7,7 @@ import com.practise.qadma.payload.view.ProductChangeNoteViewDTO;
 
 import java.util.List;
 
-public interface ChangeManagerConversionService {
+public interface ChangeManagerMappingService {
 
     List<InspectionPlanChangeNoteViewDTO> processInspectionPlanChangeNote(InspectionPlanChangeNoteDTO inspectionPlanChangeNoteDTO);
 

@@ -1,9 +1,9 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 import com.practise.qadma.payload.ProductDTO;
 import com.practise.qadma.payload.view.ProductViewDTO;
 
-public interface ProductConversionService {
+public interface ProductMappingService {
 
     ProductViewDTO findById(long id);
 

@@ -1,9 +1,9 @@
-package com.practise.qadma.conversion;
+package com.practise.qadma.mappingservice;
 
 import com.practise.qadma.payload.InspectionTemplateDTO;
 import com.practise.qadma.payload.view.InspectionTemplateViewDTO;
 
-public interface InspectionTemplateConversionService {
+public interface InspectionTemplateMappingService {
 
     InspectionTemplateViewDTO findById(long id);
 

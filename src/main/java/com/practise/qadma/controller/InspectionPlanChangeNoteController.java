@@ -1,6 +1,6 @@
 package com.practise.qadma.controller;
 
-import com.practise.qadma.conversion.InspectionPlanChangeNoteConversionService;
+import com.practise.qadma.mappingservice.InspectionPlanChangeNoteMappingService;
 import com.practise.qadma.payload.view.InspectionPlanChangeNoteViewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/inspection-plan-change-note")
 public class InspectionPlanChangeNoteController {
 
-    private InspectionPlanChangeNoteConversionService inspectionPlanChangeNoteConversionService;
+    private InspectionPlanChangeNoteMappingService inspectionPlanChangeNoteMappingService;
 
     @Autowired
-    public InspectionPlanChangeNoteController(InspectionPlanChangeNoteConversionService inspectionPlanChangeNoteConversionService) {
-        this.inspectionPlanChangeNoteConversionService = inspectionPlanChangeNoteConversionService;
+    public InspectionPlanChangeNoteController(InspectionPlanChangeNoteMappingService inspectionPlanChangeNoteMappingService) {
+        this.inspectionPlanChangeNoteMappingService = inspectionPlanChangeNoteMappingService;
     }
 
     @GetMapping("/{id}")
     public InspectionPlanChangeNoteViewDTO findById(@PathVariable long id) {
-        return inspectionPlanChangeNoteConversionService.findById(id);
+        return inspectionPlanChangeNoteMappingService.findById(id);
     }
 }
