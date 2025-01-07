@@ -16,7 +16,7 @@ public class ProductChangeNoteViewDTO {
     private String changeDescription;
     private long createdBy;
     private Date dateCreated;
-    private Product product;
+    private ProductViewDTO product;
     private long archivedProductId;
     private InspectionPlanChangeNoteViewDTO inspectionPlanChangeNote;
 }
