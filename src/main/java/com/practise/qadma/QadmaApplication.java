@@ -11,8 +11,4 @@ public class QadmaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(QadmaApplication.class, args);
 	}
-
-	@Bean
-	public ModelMapper modelMapper(){return new ModelMapper();
-	}
 }
