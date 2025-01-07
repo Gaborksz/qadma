@@ -1,11 +1,11 @@
 package com.practise.qadma.dao;
 
-import com.practise.qadma.entity.ArchivedInspectionPlan;
-import com.practise.qadma.entity.InspectionPlan;
 import com.practise.qadma.entity.InspectionPlanChangeNote;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public class InspectionPlanChangeNoteRepositoryImpl implements InspectionPlanChangeNoteRepository {
@@ -19,11 +19,10 @@ public class InspectionPlanChangeNoteRepositoryImpl implements InspectionPlanCha
 
 
     @Override
-    public InspectionPlanChangeNote findById(long id) {
+    public Optional<InspectionPlanChangeNote> findById(long id) {
 
-//        TODO
-        return null;
-    }
+        return Optional.ofNullable(entityManager.find(InspectionPlanChangeNote.class, id));
+   }
 
     @Override
     public InspectionPlanChangeNote save(InspectionPlanChangeNote changeNote) {
