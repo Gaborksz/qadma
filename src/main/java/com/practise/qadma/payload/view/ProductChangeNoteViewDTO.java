@@ -1,6 +1,5 @@
 package com.practise.qadma.payload.view;
 
-import com.practise.qadma.entity.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,7 @@ public class ProductChangeNoteViewDTO {
     private String changeDescription;
     private long createdBy;
     private Date dateCreated;
-    private ProductViewDTO product;
+    private ProductViewDTO productDTO;
     private long archivedProductId;
     private InspectionPlanChangeNoteViewDTO inspectionPlanChangeNote;
 }
