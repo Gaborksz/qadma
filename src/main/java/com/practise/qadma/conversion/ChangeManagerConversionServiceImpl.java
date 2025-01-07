@@ -7,6 +7,7 @@ import com.practise.qadma.payload.InspectionPlanChangeNoteDTO;
 import com.practise.qadma.payload.ProductChangeNoteDTO;
 import com.practise.qadma.payload.view.InspectionPlanChangeNoteViewDTO;
 import com.practise.qadma.payload.view.ProductChangeNoteViewDTO;
+import com.practise.qadma.service.ProductChangeNoteService;
 import com.practise.qadma.supportclasses.InspectionPlanChangeManager;
 import com.practise.qadma.supportclasses.ProductChangeManager;
 import org.modelmapper.ModelMapper;
@@ -20,15 +21,17 @@ import java.util.stream.Collectors;
 @Service
 public class ChangeManagerConversionServiceImpl implements ChangeManagerConversionService {
 
-    private ModelMapper modelMapper;
-    private InspectionPlanChangeManager inspectionPlanChangeManager;
-    private ProductChangeManager productChangeManager;
+    private final ModelMapper modelMapper;
+    private final InspectionPlanChangeManager inspectionPlanChangeManager;
+    private final ProductChangeManager productChangeManager;
+    private final ProductChangeNoteService productChangeNoteService;
 
     @Autowired
-    public ChangeManagerConversionServiceImpl(ModelMapper modelMapper, InspectionPlanChangeManager inspectionPlanChangeManager, ProductChangeManager productChangeManager) {
+    public ChangeManagerConversionServiceImpl(ModelMapper modelMapper, InspectionPlanChangeManager inspectionPlanChangeManager, ProductChangeManager productChangeManager, ProductChangeNoteService productChangeNoteService) {
         this.modelMapper = modelMapper;
         this.inspectionPlanChangeManager = inspectionPlanChangeManager;
         this.productChangeManager = productChangeManager;
+        this.productChangeNoteService = productChangeNoteService;
     }
 
     @Override
@@ -51,5 +54,13 @@ public class ChangeManagerConversionServiceImpl implements ChangeManagerConversi
         List<ProductChangeNote> processedProductChangeNotes = productChangeManager.processProductChangeNote(productChangeNote);
 
         return processedProductChangeNotes.stream().map(changeNote -> modelMapper.map(changeNote, ProductChangeNoteViewDTO.class)).toList();
+    }
+
+    @Override
+    public ProductChangeNoteViewDTO getProductChangeNote(long id) {
+
+        ProductChangeNote productChangeNote = productChangeNoteService.getProductChangeNote(id);
+
+        return modelMapper.map(productChangeNote, ProductChangeNoteViewDTO.class);
     }
 }

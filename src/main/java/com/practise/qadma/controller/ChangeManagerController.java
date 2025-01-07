@@ -6,10 +6,7 @@ import com.practise.qadma.payload.ProductChangeNoteDTO;
 import com.practise.qadma.payload.view.InspectionPlanChangeNoteViewDTO;
 import com.practise.qadma.payload.view.ProductChangeNoteViewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/change-note")
 public class ChangeManagerController {
 
-    private ChangeManagerConversionService changeManagerConversionService;
+    private final ChangeManagerConversionService changeManagerConversionService;
 
     @Autowired
     public ChangeManagerController(ChangeManagerConversionService changeManagerConversionService) {
@@ -36,5 +33,12 @@ public class ChangeManagerController {
             @RequestBody ProductChangeNoteDTO productChangeNoteDTO) {
 
         return changeManagerConversionService.processProductChangeNote(productChangeNoteDTO);
+    }
+
+    @GetMapping("product/{id}")
+    public  ProductChangeNoteViewDTO getProductChangeNote(
+            @PathVariable long id) {
+
+        return  changeManagerConversionService.getProductChangeNote(id);
     }
 }

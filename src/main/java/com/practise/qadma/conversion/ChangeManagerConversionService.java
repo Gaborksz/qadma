@@ -12,4 +12,6 @@ public interface ChangeManagerConversionService {
     List<InspectionPlanChangeNoteViewDTO> processInspectionPlanChangeNote(InspectionPlanChangeNoteDTO inspectionPlanChangeNoteDTO);
 
     List<ProductChangeNoteViewDTO> processProductChangeNote(ProductChangeNoteDTO productChangeNoteDTO);
+
+    ProductChangeNoteViewDTO getProductChangeNote(long id);
 }
