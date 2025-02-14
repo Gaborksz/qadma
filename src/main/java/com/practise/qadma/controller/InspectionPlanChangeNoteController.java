@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/inspection-plan-change-note")
 public class InspectionPlanChangeNoteController {
 
-    private InspectionPlanChangeNoteMappingService inspectionPlanChangeNoteMappingService;
+    private final InspectionPlanChangeNoteMappingService inspectionPlanChangeNoteMappingService;
 
     @Autowired
     public InspectionPlanChangeNoteController(InspectionPlanChangeNoteMappingService inspectionPlanChangeNoteMappingService) {

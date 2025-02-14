@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/inspection-plan")
 public class InspectionPlanController {
 
-    private InspectionPlanMappingService inspectionPlanMappingService;
+    private final InspectionPlanMappingService inspectionPlanMappingService;
 
 
     @Autowired

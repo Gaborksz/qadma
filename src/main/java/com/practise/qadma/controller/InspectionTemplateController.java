@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/inspection-template")
 public class InspectionTemplateController {
 
-    private InspectionTemplateMappingService inspectionTemplateMappingService;
+    private final InspectionTemplateMappingService inspectionTemplateMappingService;
 
 
     @Autowired
