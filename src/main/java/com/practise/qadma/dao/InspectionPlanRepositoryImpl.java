@@ -38,9 +38,7 @@ public class InspectionPlanRepositoryImpl implements InspectionPlanRepository {
 
         query.setParameter("productId", productId);
 
-        InspectionPlan ip = query.getSingleResult();
-
-        return ip;
+        return query.getSingleResult();
     }
 
 
