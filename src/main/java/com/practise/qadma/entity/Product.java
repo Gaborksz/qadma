@@ -1,6 +1,10 @@
-package com.practise.qadma.entity;
+package com.practise.qadma.entity.product;
 
+import com.practise.qadma.auth.entity.QadmaUser;
+import com.practise.qadma.entity.InspectionPlan;
+import com.practise.qadma.entity.ProductChangeNote;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,24 +28,34 @@ public class Product {
     @Column(name = "part_number")
     private int partNumber;
 
+    @NotBlank
     @Column(name = "name")
-    private String name;
+    private String productName;
 
     @Column(name = "revision")
     private int revision;
 
+    
     @Column(name = "date_created")
     private Date dateCreated;
+        
+    @Column(name = "createdby_userid")
+    long createdById;
 
+    @Transient
+    private QadmaUser createdBy;
+    
+    
     @Column(name = "date_modified")
     private Date dateModified;
 
-    @Column(name = "created_by")
-    private long createdBy;
+    @Column(name = "modifiedBy_userid")
+    long modifiedById;
+    
+    @Transient
+    private QadmaUser modifiedBy;
 
-    @Column(name = "modified_by")
-    private long modifiedBy;
-
+    
     @OneToOne
     @JoinColumn(name = "inspection_plan_id")
     private InspectionPlan inspectionPlan;
