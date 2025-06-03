@@ -15,11 +15,13 @@ public class ProductViewDTO {
 
     private long id;
     private int partNumber;
-    private String name;
+    private String productName;
     private int revision;
     private Date dateCreated;
     private Date dateModified;
-    private long createdBy;
-    private long modifiedBy;
+    private long creatorId;
+    private String creatorName;
+    private long modifierId;
+    private String modifierName;
     private long inspectionPlanId;
 }

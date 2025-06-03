@@ -12,6 +12,6 @@ public class ProductInfoDTO {
 
     private long productId;
     private int partNumber;
-    private String name;
+    private String productName;
     private int revision;
 }

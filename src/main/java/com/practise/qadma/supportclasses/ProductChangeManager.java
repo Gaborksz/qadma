@@ -101,8 +101,9 @@ public class ProductChangeManager {
         Product managedProduct = persistProduct(productChangeNote.getProduct());
         ArchivedProduct archivedProduct = archivedProductService.archiveProduct(managedProduct);
 
-        archivedProduct.setArchivedInspectionPlan(productChangeNote.getInspectionPlanChangeNote().getArchivedInspectionPlan());
-
+        if ( submittedProductChangeNote.getInspectionPlanChangeNote() != null) {
+            archivedProduct.setArchivedInspectionPlan(productChangeNote.getInspectionPlanChangeNote().getArchivedInspectionPlan());
+        }
         productChangeNote.setArchivedProduct(archivedProduct);
         productChangeNoteService.save(productChangeNote);
     }

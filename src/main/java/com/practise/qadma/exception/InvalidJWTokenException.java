@@ -1,4 +1,10 @@
 package com.practise.qadma.exception;
 
-public class InvalidJWTokenException {
+import org.springframework.security.core.AuthenticationException;
+
+public class InvalidJWTokenException extends AuthenticationException {
+
+    public InvalidJWTokenException() {
+        super("Token could not be verified");
+    }
 }

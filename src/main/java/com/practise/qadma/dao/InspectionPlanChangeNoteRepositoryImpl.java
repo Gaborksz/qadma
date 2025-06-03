@@ -3,6 +3,7 @@ package com.practise.qadma.dao;
 import com.practise.qadma.entity.InspectionPlanChangeNote;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

@@ -1,6 +1,7 @@
 package com.practise.qadma.supportclasses;
 
 import com.practise.qadma.entity.*;
+import com.practise.qadma.entity.Product;
 import com.practise.qadma.service.ArchivedInspectionTemplateService;
 import com.practise.qadma.service.InspectionTemplateChangeNoteService;
 import com.practise.qadma.service.InspectionTemplateService;

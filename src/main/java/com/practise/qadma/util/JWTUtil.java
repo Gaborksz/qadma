@@ -1,13 +1,16 @@
-package com.practise.qadma.auth.JWT;
+package com.practise.qadma.util;
 
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.practise.qadma.auth.entity.QadmaUser;
+import com.practise.qadma.auth.entity.QadmaUserAuthority;
+import com.practise.qadma.auth.entity.QadmaUserAuthorityType;
+import com.practise.qadma.auth.payload.QadmaUserAuthorityDTO;
+import com.practise.qadma.auth.payload.QadmaUserDTO;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
@@ -15,6 +18,7 @@ import java.security.KeyStore;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
+import java.util.List;
 
 
 //  See how to generate keystore file and settings at the bottom of class
@@ -50,13 +54,13 @@ public class JWTUtil {
         publicKey = (RSAPublicKey) keyStore.getCertificate(keyAlias).getPublicKey();
     }
 
-    public String generateToken(QadmaUser user) {
+    public String generateToken(QadmaUserDTO user) {
         return JWT.create()
                 .withIssuer(issuer)
                 .withSubject(user.getUsername())
                 .withClaim("user-id", user.getId())
                 .withArrayClaim("user-roles", user.getAuthorities().stream()
-                        .map(GrantedAuthority::getAuthority)
+                        .map(auth-> auth.getId() + ":" + auth.getAuthority())
                         .toArray(String[]::new))
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
@@ -75,8 +79,21 @@ public class JWTUtil {
         }
     }
 
-    public String extractUsername(String token) {
-        return JWT.decode(token).getSubject();
+    public QadmaUserDTO extractUser(String token) {
+
+        List<QadmaUserAuthorityDTO> authorities = JWT.decode(token).getClaim("user-roles").asList(String.class)
+                .stream().map(auth -> {
+                    QadmaUserAuthorityDTO authority = new QadmaUserAuthorityDTO();
+                    String[] authParts = auth.split(":");
+                    authority.setId(Integer.parseInt(authParts[0]));
+                    authority.setAuthority(QadmaUserAuthorityType.valueOf(authParts[1]));
+                    return authority;
+                }).toList();
+
+        return new QadmaUserDTO(
+                JWT.decode(token).getClaim("user-id").asInt(),
+                JWT.decode(token).getSubject(),
+                authorities);
     }
 }
 

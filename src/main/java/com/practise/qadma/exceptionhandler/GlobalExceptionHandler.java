@@ -1,6 +1,7 @@
 package com.practise.qadma.exceptionhandler;
 
 import com.practise.qadma.exception.ItemNotFoundException;
+import com.practise.qadma.exception.UserExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,4 +19,12 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
-}
+
+    @ExceptionHandler()
+    public ResponseEntity<ErrorResponse> handleUserExistException(UserExistException ex) {
+
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+   }

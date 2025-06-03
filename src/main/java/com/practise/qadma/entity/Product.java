@@ -1,10 +1,9 @@
-package com.practise.qadma.entity.product;
+package com.practise.qadma.entity;
 
 import com.practise.qadma.auth.entity.QadmaUser;
-import com.practise.qadma.entity.InspectionPlan;
-import com.practise.qadma.entity.ProductChangeNote;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,19 +37,21 @@ public class Product {
     
     @Column(name = "date_created")
     private Date dateCreated;
-        
+
+    @Setter(AccessLevel.PROTECTED)
     @Column(name = "createdby_userid")
-    long createdById;
+    private long creatorId;
 
     @Transient
     private QadmaUser createdBy;
-    
-    
+
+
     @Column(name = "date_modified")
     private Date dateModified;
 
+    @Setter(AccessLevel.PROTECTED)
     @Column(name = "modifiedBy_userid")
-    long modifiedById;
+    long modifierId;
     
     @Transient
     private QadmaUser modifiedBy;
@@ -62,4 +63,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<ProductChangeNote> productChangeNotes;
+
+    public void setCreatedBy(QadmaUser createdBy) {
+        this.creatorId = createdBy != null ? createdBy.getId() : 0;
+        this.createdBy = createdBy;
+    }
 }
