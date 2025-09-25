@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,20 +15,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "inspection_template_change_note")
-public class InspectionTemplateChangeNote {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "created_by")
-    private long createdBy;
-
-    @Column(name = "date_created")
-    private Date dateCreated;
-
-    @Column(name = "description")
-    private String changeDescription;
+public class InspectionTemplateChangeNote extends ChangeNote {
 
     @ManyToMany(mappedBy = "templateChangeNotes")
     Set<InspectionPlanChangeNote> inspectionPlanChangeNotes;
@@ -47,7 +33,6 @@ public class InspectionTemplateChangeNote {
 
     @Transient
     private int templateSequenceNumber;
-
 
     public void addInspectionPlanChangeNote(InspectionPlanChangeNote inspectionPlanChangeNote) {
 
