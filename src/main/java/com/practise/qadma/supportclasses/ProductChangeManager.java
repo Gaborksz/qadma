@@ -86,7 +86,7 @@ public class ProductChangeManager {
         product.setDateModified(planChangeNote.getDateCreated());
 
         productChangeNote.addTextToChangeDescription(planChangeNote.getChangeDescription());
-        productChangeNote.setCreatedBy(planChangeNote.getCreatedBy());
+        productChangeNote.setCreatorId(planChangeNote.getCreatedBy());
         productChangeNote.setDateCreated(planChangeNote.getDateCreated());
 
         productChangeNote.setProduct(product);
@@ -105,7 +105,8 @@ public class ProductChangeManager {
             archivedProduct.setArchivedInspectionPlan(productChangeNote.getInspectionPlanChangeNote().getArchivedInspectionPlan());
         }
         productChangeNote.setArchivedProduct(archivedProduct);
-        productChangeNoteService.save(productChangeNote);
+        ProductChangeNote updatedProductChangeNote = productChangeNoteService.save(productChangeNote);
+        productChangeNote.setId(updatedProductChangeNote.getId());
     }
 
 

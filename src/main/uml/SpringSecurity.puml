@@ -1,0 +1,203 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+interface UserDetailsService{
+    loadUserByUsername(String username) : UserDetails
+}
+
+interface UserDetailsManager extends UserDetailsService {
+    createUser(UserDetails user): void
+
+    updateUser(UserDetails user): void
+
+    deleteUser(String username): void
+
+    changePassword(String oldPassword, String newPassword): void
+
+    userExists(String username): boolean
+}
+
+JdbcUserDetailsManager --> AuthenticationManager
+class JdbcUserDetailsManager extends JdbcDaoImpl implements UserDetailsManager, GroupManager {
+    # final Log logger
+    - SecurityContextHolderStrategy securityContextHolderStrategy
+    - AuthenticationManager authenticationManager
+    - UserCache userCache
+
+    # loadUsersByUsername(String username): List<UserDetails>
+    + createUser(final UserDetails user): void
+    + updateUser(final UserDetails user): void
+    + deleteUser(String username): void
+    + changePassword(String oldPassword, String newPassword): void
+    # createNewAuthentication(Authentication currentAuth, String newPassword): Authentication
+    + userExists(String username): boolean
+    + findAllGroups(): List<String>
+    + findUsersInGroup(String groupName): List<String>
+    + createGroup(final String groupName, final List<GrantedAuthority> authorities): void
+    + deleteGroup(String groupName): void
+    + renameGroup(String oldName, String newName): void
+    + addUserToGroup(final String username, final String groupName): void
+    + removeUserFromGroup(final String username, final String groupName): void
+    + findGroupAuthorities(String groupName): List<GrantedAuthority>
+    + removeGroupAuthority(String groupName, final GrantedAuthority authority): void
+    + addGroupAuthority(final String groupName, final GrantedAuthority authority): void
+    + setSecurityContextHolderStrategy(SecurityContextHolderStrategy securityContextHolderStrategy): void
+    + setAuthenticationManager(AuthenticationManager authenticationManager): void
+    + setUserCache(UserCache userCache): void
+    }
+
+class JdbcDaoImpl extends JdbcDaoSupport implements UserDetailsService {
+    # getMessages(): MessageSourceAccessor
+    # addCustomAuthorities(String username, List<GrantedAuthority> authorities): void
+    + getUsersByUsernameQuery(): String
+    # initDao(): void
+    + loadUserByUsername(String username): UserDetails
+    # loadUsersByUsername(String username): List<UserDetails>
+    # loadUserAuthorities(String username): List<GrantedAuthority>
+    # loadGroupAuthorities(String username): List<GrantedAuthority>
+    # createUserDetails(String username, UserDetails userFromUserQuery, List<GrantedAuthority> combinedAuthorities): UserDetails
+    + setAuthoritiesByUsernameQuery(String queryString): void
+    # getAuthoritiesByUsernameQuery(): String
+    + setGroupAuthoritiesByUsernameQuery(String queryString): void
+    + setRolePrefix(String rolePrefix): void
+    # getRolePrefix(): String
+    + setUsernameBasedPrimaryKey(boolean usernameBasedPrimaryKey): void
+    # isUsernameBasedPrimaryKey(): boolean
+    + setUsersByUsernameQuery(String usersByUsernameQueryString): void
+    # getEnableAuthorities(): boolean
+    + setEnableAuthorities(boolean enableAuthorities): void
+    # getEnableGroups(): boolean
+    + setEnableGroups(boolean enableGroups): void
+    + setMessageSource(MessageSource messageSource): void
+    }
+
+
+interface UserDetailsPasswordService {
+     updatePassword(UserDetails user, String newPassword): UserDetails
+    }
+
+interface AuthenticationManager {
+    authenticate(Authentication authentication): Authentication
+    }
+
+ProviderManager --> AuthenticationProvider
+class ProviderManager implements AuthenticationManager {
+    - List<AuthenticationProvider> providers
+    - static final Log logger
+    - AuthenticationEventPublisher eventPublisher
+    # MessageSourceAccessor messages
+    - AuthenticationManager parent
+    - boolean eraseCredentialsAfterAuthentication
+
+    + authenticate(Authentication authentication): Authentication
+    + afterPropertiesSet(): void
+    + getProviders(): List<AuthenticationProvider>
+    + setMessageSource(MessageSource messageSource): void
+    + setAuthenticationEventPublisher(AuthenticationEventPublisher eventPublisher): void
+    + setEraseCredentialsAfterAuthentication(boolean eraseSecretData): void
+    + isEraseCredentialsAfterAuthentication(): boolean
+    }
+
+interface AuthenticationProvider {
+    authenticate(Authentication authentication): Authentication
+    supports(Class<?> authentication) : boolean
+}
+
+class AbstractUserDetailsAuthenticationProvider implements AuthenticationProvider, InitializingBean {
+    # final Log logger
+    # MessageSourceAccessor messages
+    - UserCache userCache
+    - boolean forcePrincipalAsString
+    # boolean hideUserNotFoundExceptions
+    - UserDetailsChecker preAuthenticationChecks
+    - UserDetailsChecker postAuthenticationChecks
+    - GrantedAuthoritiesMapper authoritiesMapper
+
+    + authenticate(Authentication authentication): Authentication
+    + supports(Class<?> authentication): boolean
+    + final afterPropertiesSet(): void
+    # createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user): Authentication
+    # doAfterPropertiesSet(): void
+    + isForcePrincipalAsString(): boolean
+    + isHideUserNotFoundExceptions(): boolean
+    # abstract retrieveUser(String username, UsernamePasswordAuthenticationToken authentication): UserDetails
+    + setForcePrincipalAsString(boolean forcePrincipalAsString): void
+    + setHideUserNotFoundExceptions(boolean hideUserNotFoundExceptions): void
+    + setMessageSource(MessageSource messageSource): void
+    + getUserCache(): UserCache
+    + setUserCache(UserCache userCache): void
+    # getPreAuthenticationChecks(): UserDetailsChecker
+    + setPreAuthenticationChecks(UserDetailsChecker preAuthenticationChecks): void
+    # getPostAuthenticationChecks(): UserDetailsChecker
+    + setPostAuthenticationChecks(UserDetailsChecker postAuthenticationChecks): void
+    + setAuthoritiesMapper(GrantedAuthoritiesMapper authoritiesMapper): void
+    }
+
+    class DaoAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+        - static final String USER_NOT_FOUND_PASSWORD
+        - PasswordEncoder passwordEncoder
+        - volatile String userNotFoundEncodedPassword
+        - UserDetailsService userDetailsService
+        - UserDetailsPasswordService userDetailsPasswordService
+        - CompromisedPasswordChecker compromisedPasswordChecker
+
+        # additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication): void
+        # doAfterPropertiesSet(): void
+        # final retrieveUser(String username, UsernamePasswordAuthenticationToken authentication): UserDetails
+        # createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user): Authentication
+        # getPasswordEncoder(): PasswordEncoder
+        + setPasswordEncoder(PasswordEncoder passwordEncoder): void
+        # getUserDetailsService(): UserDetailsService
+        + setUserDetailsService(UserDetailsService userDetailsService): void
+        + setUserDetailsPasswordService(UserDetailsPasswordService userDetailsPasswordService): void
+        + setCompromisedPasswordChecker(CompromisedPasswordChecker compromisedPasswordChecker): void
+        }
+
+
+interface Principal {
+    getName(): String
+}
+
+interface Authentication extends Principal, Serializable {
+    getAuthorities(): Collection<? extends GrantedAuthority>
+    getDetails(): Object
+    isAuthenticated(): boolean
+    setAuthenticated(boolean isAuthenticated): void
+    --Not implemented in AbstractAuthenticationToken--
+    getCredentials(): Object
+    getPrincipal(): Object
+    }
+
+interface CredentialsContainer {
+    eraseCredentials(): void
+}
+
+abstract class AbstractAuthenticationToken implements Authentication, CredentialsContainer {
+        - final Collection<GrantedAuthority> authorities;
+        - Object details;
+        - boolean authenticated
+        + getAuthorities(): Collection<GrantedAuthority>
+        + getDetails(): Object
+        + isAuthenticated(): boolean
+        + setAuthenticated(boolean authenticated): void
+        + getName(): String
+        + setDetails(Object details): void
+        + eraseCredentials(): void
+    }
+
+class UsernamePasswordAuthenticationToken extends AbstractAuthenticationToken {
+        - static final long serialVersionUID
+        - final Object principal
+        - Object credentials
+
+        + static UsernamePasswordAuthenticationToken unauthenticated(Object principal, Object credentials)
+        + static UsernamePasswordAuthenticationToken authenticated(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities)
+        + getCredentials(): Object
+        + getPrincipal(): Object
+        + setAuthenticated(boolean isAuthenticated): void
+        + eraseCredentials(): void
+    }
+
+
+
+@enduml

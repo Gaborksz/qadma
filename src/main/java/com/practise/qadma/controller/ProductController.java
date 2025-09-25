@@ -36,7 +36,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("search")
+    @PostMapping("/search")
     public Set<ProductViewDTO> search(@RequestBody ProductSearchCriteriaDTO searchCriteria) {
 
         Set<ProductViewDTO> search = productMappingService.search(searchCriteria);

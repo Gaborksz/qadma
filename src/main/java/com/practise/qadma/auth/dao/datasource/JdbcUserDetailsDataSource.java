@@ -35,6 +35,7 @@ public class JdbcUserDetailsDataSource {
                 .build();
     }
 
+
     @Bean(name = "defaultSpringUsersEntityManagerFactory")
     LocalContainerEntityManagerFactoryBean entityManagerFactory(
             @Qualifier("defaultSpringUsers") DataSource dataSource) {
@@ -44,6 +45,7 @@ public class JdbcUserDetailsDataSource {
 
         em.setDataSource(dataSource);
         em.setPackagesToScan("com.practise.qadma.auth.entity");
+        em.setPersistenceUnitName("SpringDefaultUsersDb");
 
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(getHibernateProperties());
@@ -61,9 +63,9 @@ public class JdbcUserDetailsDataSource {
     private static Properties getHibernateProperties() {
 
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.archive.autodetection", "class");
+//        properties.setProperty("hibernate.hbm2ddl.auto", "update");                               //  ←   auto creates / updates  schemas
+//        properties.setProperty("hibernate.archive.autodetection", "class");                      //  ←  auto scan for all @Entity so no need to manually add folders
 
         return properties;
     }

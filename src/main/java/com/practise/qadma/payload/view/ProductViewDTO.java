@@ -1,6 +1,7 @@
 package com.practise.qadma.payload.view;
 
 
+import com.practise.qadma.auth.payload.QadmaUserDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,9 +20,6 @@ public class ProductViewDTO {
     private int revision;
     private Date dateCreated;
     private Date dateModified;
-    private long creatorId;
-    private String creatorName;
-    private long modifierId;
-    private String modifierName;
-    private long inspectionPlanId;
+    private QadmaUserDTO createdBy;
+    private QadmaUserDTO modifiedBy;
 }

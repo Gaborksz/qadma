@@ -23,6 +23,17 @@ public class QadmaUserServiceImpl implements QadmaUserService{
     }
 
     @Override
+    public QadmaUser findUserById(long id){
+
+        QadmaUser user = new QadmaUser();
+
+        if ( id > 0) {
+            user = qadmaUserRepository.findUserById(id);
+        }
+        return user != null ? user : new QadmaUser();
+    }
+
+    @Override
     public Set<QadmaUser> findUsersBySearchTerm(String searchTerm) {
         return qadmaUserRepository.findUsersBySearchTerm(searchTerm);
     }

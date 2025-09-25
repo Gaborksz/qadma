@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -74,20 +75,23 @@ public class ProductServiceImpl implements ProductService {
 
         Set<Product> products = productRepository.search(searchCriteria);
 
+        return populateUserFields(products);
+    }
+
+    public Set<Product> populateUserFields(Set<Product> products) {
+
         Set<Long> userIds = products.stream()
-                .map(Product::getCreatorId)
+                .flatMap(p -> Stream.of(p.getCreatorId(), p.getModifierId()))
                 .collect(Collectors.toSet());
 
-        userIds.addAll(products.stream().map(Product::getModifierId).collect(Collectors.toSet()));
-
-        Map<Long, QadmaUser> users = qadmaUserService.findUsersByIds(userIds).stream()
+        Map<Long, QadmaUser> userMap = qadmaUserService.findUsersByIds(userIds).stream()
                 .collect(Collectors.toMap(QadmaUser::getId, user -> user));
 
         products.forEach(p -> {
             long creatorId = p.getCreatorId();
             long modifierId = p.getModifierId();
-            p.setCreatedBy(users.get(creatorId));
-            p.setModifiedBy(users.get(modifierId));
+            p.setCreatedBy(userMap.get(creatorId));
+            p.setModifiedBy(userMap.get(modifierId));
         });
 
         return products;

@@ -18,5 +18,5 @@ public class ArchivedProductDTO {
     private int revision;
     private Date dateCreated;
     private long createdBy;
-    private long archivedInspectionPlanId;
+    private ArchivedInspectionPlanDTO archivedInspectionPlan;
 }

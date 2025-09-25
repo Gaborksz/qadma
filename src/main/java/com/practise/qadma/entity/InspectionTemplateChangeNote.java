@@ -15,7 +15,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "InspectionTemplateChangeNote")
+@Table(name = "inspection_template_change_note")
 public class InspectionTemplateChangeNote {
 
     @Id

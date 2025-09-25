@@ -13,5 +13,5 @@ public interface ChangeManagerMappingService {
 
     List<ProductChangeNoteViewDTO> processProductChangeNote(ProductChangeNoteDTO productChangeNoteDTO);
 
-    ProductChangeNoteViewDTO getProductChangeNote(long id);
+
 }

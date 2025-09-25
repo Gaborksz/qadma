@@ -34,4 +34,9 @@ public class QadmaUserMappingServiceImpl implements QadmaUserMappingService {
                 .map(u -> modelMapper.map(u, QadmaUserDTO.class))
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public QadmaUserDTO findUserById(long id) {
+        return modelMapper.map( qadmaUserService.findUserById(id), QadmaUserDTO.class);
+    }
 }

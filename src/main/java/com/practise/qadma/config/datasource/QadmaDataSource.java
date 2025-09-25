@@ -1,7 +1,8 @@
-package com.practise.qadma.dao.datasource;
+package com.practise.qadma.config.datasource;
 
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +21,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "jdbcQadmaEntiyManager",
+        entityManagerFactoryRef = "jdbcQadmaEntityManager",
         transactionManagerRef = "jdbcQadmaTransactionManager",
         basePackages = "com.practise.qadma.dao")
 public class QadmaDataSource {
@@ -38,7 +39,7 @@ public class QadmaDataSource {
     }
 
     @Primary
-    @Bean(name = "jdbcQadmaEntiyManager")
+    @Bean(name = "jdbcQadmaEntityManager")
     LocalContainerEntityManagerFactoryBean entityManagerFactory(
             @Qualifier("jdbcQadmaDataSource") DataSource dataSource) {
 
@@ -47,6 +48,7 @@ public class QadmaDataSource {
 
         em.setDataSource(dataSource);
         em.setPackagesToScan("com.practise.qadma.entity");
+        em.setPersistenceUnitName("QadmaDb");
 
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(getHibernateProperties());
@@ -57,7 +59,7 @@ public class QadmaDataSource {
     @Primary
     @Bean(name = "jdbcQadmaTransactionManager")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("jdbcQadmaEntiyManager") EntityManagerFactory entityManagerFactory) {
+            @Qualifier("jdbcQadmaEntityManager") EntityManagerFactory entityManagerFactory) {
 
         return new JpaTransactionManager(entityManagerFactory);
     }
@@ -65,8 +67,6 @@ public class QadmaDataSource {
     private static Properties getHibernateProperties() {
 
         Properties properties = new Properties();
-//        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.show_sql", "true");
 
         return properties;

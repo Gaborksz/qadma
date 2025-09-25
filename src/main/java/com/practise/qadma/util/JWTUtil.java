@@ -3,8 +3,6 @@ package com.practise.qadma.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.practise.qadma.auth.entity.QadmaUser;
-import com.practise.qadma.auth.entity.QadmaUserAuthority;
 import com.practise.qadma.auth.entity.QadmaUserAuthorityType;
 import com.practise.qadma.auth.payload.QadmaUserAuthorityDTO;
 import com.practise.qadma.auth.payload.QadmaUserDTO;
@@ -60,7 +58,7 @@ public class JWTUtil {
                 .withSubject(user.getUsername())
                 .withClaim("user-id", user.getId())
                 .withArrayClaim("user-roles", user.getAuthorities().stream()
-                        .map(auth-> auth.getId() + ":" + auth.getAuthority())
+                        .map(auth -> auth.getId() + ":" + auth.getAuthority())
                         .toArray(String[]::new))
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour

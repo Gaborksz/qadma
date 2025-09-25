@@ -1,6 +1,8 @@
 package com.practise.qadma.entity;
 
+import com.practise.qadma.auth.entity.QadmaUser;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,11 +24,14 @@ public class ProductChangeNote {
     @Column(name = "description")
     private String changeDescription;
 
-    @Column(name = "created_by")
-    private long createdBy;
-
     @Column(name = "date_created")
     private Date dateCreated;
+
+    @Column(name = "created_by_userid")
+    private long creatorId;
+
+    @Transient
+    private QadmaUser createdBy;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -45,5 +50,10 @@ public class ProductChangeNote {
         if (this.changeDescription == null) this.changeDescription = "";
 
         this.changeDescription = this.changeDescription + "\n" + changeDescription;
+    }
+
+    public void setCreatedBy(QadmaUser createdBy) {
+        this.createdBy = createdBy;
+        this.creatorId = this.createdBy != null ? this.createdBy.getId() : 0;
     }
 }

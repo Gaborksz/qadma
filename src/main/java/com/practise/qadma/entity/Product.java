@@ -33,29 +33,26 @@ public class Product {
 
     @Column(name = "revision")
     private int revision;
-
     
     @Column(name = "date_created")
     private Date dateCreated;
 
     @Setter(AccessLevel.PROTECTED)
-    @Column(name = "createdby_userid")
+    @Column(name = "created_by_userid")
     private long creatorId;
 
     @Transient
     private QadmaUser createdBy;
 
-
     @Column(name = "date_modified")
     private Date dateModified;
 
     @Setter(AccessLevel.PROTECTED)
-    @Column(name = "modifiedBy_userid")
+    @Column(name = "modified_by_userid")
     long modifierId;
     
     @Transient
     private QadmaUser modifiedBy;
-
     
     @OneToOne
     @JoinColumn(name = "inspection_plan_id")
@@ -65,7 +62,12 @@ public class Product {
     private Set<ProductChangeNote> productChangeNotes;
 
     public void setCreatedBy(QadmaUser createdBy) {
-        this.creatorId = createdBy != null ? createdBy.getId() : 0;
         this.createdBy = createdBy;
+        this.creatorId = this.createdBy != null ? this.createdBy.getId() : 0;
+    }
+
+    public void setModifiedBy(QadmaUser modifiedBy) {
+        this.modifiedBy = modifiedBy;
+        this.modifierId = this.modifiedBy != null ? this.modifiedBy.getId() : 0;
     }
 }

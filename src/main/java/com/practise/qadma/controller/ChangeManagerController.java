@@ -32,13 +32,8 @@ public class ChangeManagerController {
     public List<ProductChangeNoteViewDTO> processProductChangeNote(
             @RequestBody ProductChangeNoteDTO productChangeNoteDTO) {
 
+        System.out.println(productChangeNoteDTO);
+
         return changeManagerMappingService.processProductChangeNote(productChangeNoteDTO);
-    }
-
-    @GetMapping("product/{id}")
-    public  ProductChangeNoteViewDTO getProductChangeNote(
-            @PathVariable long id) {
-
-        return  changeManagerMappingService.getProductChangeNote(id);
     }
 }

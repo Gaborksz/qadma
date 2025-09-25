@@ -21,5 +21,7 @@ public interface QadmaUserRepository {
 
     Set<QadmaUser> findUsersByIds(Set<Long> userIdSet);
 
+    QadmaUser findUserById(long id);
+
     Set<QadmaUser> findUsersBySearchTerm(String searchTerm);
 }

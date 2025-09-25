@@ -1,5 +1,6 @@
 package com.practise.qadma.payload;
 
+import com.practise.qadma.auth.payload.QadmaUserDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,6 @@ abstract class ChangeNoteDTO {
 
     private long id;
     private String changeDescription;
-    private long createdBy;
+    private QadmaUserDTO createdBy;
     private Date dateCreated;
 }

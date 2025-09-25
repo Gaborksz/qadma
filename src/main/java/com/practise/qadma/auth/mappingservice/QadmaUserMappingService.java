@@ -9,4 +9,6 @@ public interface QadmaUserMappingService {
     Set<QadmaUserDTO> findUsersByIds(Set<Long> userIdSet);
 
     Set<QadmaUserDTO> findUsersBySearchTerm(String searchTerm);
+
+    QadmaUserDTO findUserById(long id);
 }

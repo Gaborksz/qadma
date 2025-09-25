@@ -13,6 +13,7 @@ import java.util.Map;
 @NoArgsConstructor
 
 @Entity
+@Table(name = "archived_inspection_plan")
 public class ArchivedInspectionPlan {
 
     @Id

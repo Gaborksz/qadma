@@ -87,6 +87,12 @@ public class QadmaJdbcUserRepositoryImpl implements QadmaUserRepository {
     }
 
     @Override
+    public QadmaUser findUserById(long id) {
+
+        return entityManager.find(QadmaUser. class, id);
+    }
+
+    @Override
     public Set<QadmaUser> findUsersBySearchTerm(String searchTerm) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();

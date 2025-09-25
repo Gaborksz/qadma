@@ -4,10 +4,7 @@ import com.practise.qadma.auth.mappingservice.QadmaUserMappingService;
 import com.practise.qadma.auth.payload.QadmaUserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -32,5 +29,10 @@ public class UserController {
     public ResponseEntity<Set<QadmaUserDTO>> findUsersBySearchTerm(@RequestBody String searchTerm) {
 
         return ResponseEntity.ok(qadmaUserMappingService.findUsersBySearchTerm(searchTerm));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<QadmaUserDTO> findUserById(@PathVariable long id) {
+        return ResponseEntity.ok(qadmaUserMappingService.findUserById(id));
     }
 }

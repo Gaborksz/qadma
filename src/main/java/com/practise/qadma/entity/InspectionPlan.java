@@ -16,6 +16,7 @@ import java.util.Set;
 
 
 @Entity
+@Table(name = "inspection_plan")
 public class InspectionPlan {
 
     @Id

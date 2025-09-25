@@ -1,7 +1,6 @@
 package com.practise.qadma.payload;
 
-import com.practise.qadma.auth.entity.QadmaUser;
-import com.practise.qadma.entity.ProductChangeNote;
+import com.practise.qadma.auth.payload.QadmaUserDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,10 +21,8 @@ public class ProductDTO {
     private int revision;
     private Date dateCreated;
     private Date dateModified;
-    private long creatorId;
-    private QadmaUser createdBy;
-    private long modifierId;
-    private QadmaUser modifiedBy;
+    private QadmaUserDTO createdBy;
+    private QadmaUserDTO modifiedBy;
     private InspectionPlanDTO inspectionPlan;
-    private Set<ProductChangeNote> productChangeNotes;
+    private Set<ProductChangeNoteDTO> productChangeNotes;
 }

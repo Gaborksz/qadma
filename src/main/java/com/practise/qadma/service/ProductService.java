@@ -21,4 +21,6 @@ public interface ProductService {
     List<Product> findAll();
 
     Set<Product> search(ProductSearchCriteriaDTO searchCriteria);
+
+    Set<Product> populateUserFields(Set<Product> products);
 }
