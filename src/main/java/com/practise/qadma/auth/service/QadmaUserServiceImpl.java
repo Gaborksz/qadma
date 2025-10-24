@@ -2,6 +2,7 @@ package com.practise.qadma.auth.service;
 
 import com.practise.qadma.auth.dao.QadmaUserRepository;
 import com.practise.qadma.auth.entity.QadmaUser;
+import com.practise.qadma.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,17 @@ public class QadmaUserServiceImpl implements QadmaUserService{
     @Override
     public QadmaUser findUserById(long id){
 
-        QadmaUser user = new QadmaUser();
-
-        if ( id > 0) {
-            user = qadmaUserRepository.findUserById(id);
+        if (id <= 0) {
+            throw new IllegalArgumentException("Invalid user id: " + id);
         }
-        return user != null ? user : new QadmaUser();
+
+        QadmaUser user = qadmaUserRepository.findUserById(id);
+
+        if (user == null) {
+            throw new UserNotFoundException("User not found with id: " + id);
+        }
+
+        return user;
     }
 
     @Override

@@ -14,6 +14,4 @@ public interface ProductMappingService {
     ProductViewDTO save(ProductDTO productDTO);
 
     List<ProductViewDTO> findAll();
-
-    Set<ProductViewDTO> search(ProductSearchCriteriaDTO searchCriteria);
 }

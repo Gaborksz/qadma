@@ -1,6 +1,5 @@
 package com.practise.qadma.mappingservice;
 
-import com.practise.qadma.entity.InspectionTemplate;
 import com.practise.qadma.payload.InspectionTemplateDTO;
 import com.practise.qadma.payload.view.InspectionTemplateViewDTO;
 import com.practise.qadma.service.InspectionTemplateService;
@@ -29,10 +28,6 @@ public class InspectionTemplateMappingServiceImpl implements InspectionTemplateM
     @Override
     public InspectionTemplateDTO save(InspectionTemplateDTO templateDTO) {
 
-        InspectionTemplate newTemplate = modelMapper.map(templateDTO, InspectionTemplate.class);
-
-        InspectionTemplate mangedTemplate = inspectionTemplateService.save(newTemplate);
-
-        return modelMapper.map(mangedTemplate, InspectionTemplateDTO.class);
+        return null;
     }
 }

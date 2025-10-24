@@ -49,11 +49,4 @@ public class ProductMappingServiceImpl implements ProductMappingService {
                         modelMapper.map(product, ProductViewDTO.class))
                 .toList();
     }
-
-    @Override
-    public Set<ProductViewDTO> search(ProductSearchCriteriaDTO searchCriteria) {
-        return productService.search(searchCriteria).stream()
-                .map(product ->
-                        modelMapper.map(product, ProductViewDTO.class)).collect(Collectors.toSet());
-    }
 }

@@ -1,5 +1,6 @@
 package com.practise.qadma.payload;
 
+import com.practise.qadma.auth.payload.QadmaUserDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,8 +18,8 @@ public class InspectionTemplateDTO {
     private int revision;
     private Date dateCreated;
     private Date dateModified;
-    private long createdBy;
-    private long modifiedBy;
+    private QadmaUserDTO createdBy;
+    private QadmaUserDTO modifiedBy;
     private boolean attributeInspection;
     private String specificationDescription;
     private int specificationValue;

@@ -21,13 +21,13 @@ public class SequenceService {
 
     public Map<Integer, InspectionTemplate> saveSequence(Map<Integer, InspectionTemplate> sequence) {
 
-        sequence.forEach((sequenceNumber, template) -> {
-            if (template.getId() == 0) {
-                inspectionTemplateService.save(template);
-            } else {
-                inspectionTemplateService.findById(template.getId());
-            }
-        });
+//        sequence.forEach((sequenceNumber, template) -> {
+//            if (template.getId() == 0) {
+//                inspectionTemplateService.save(template);
+//            } else {
+//                inspectionTemplateService.findById(template.getId());
+//            }
+//        });
 
         return sequence;
     }

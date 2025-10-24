@@ -32,14 +32,14 @@ public class InspectionPlanChangeNote extends ChangeNote {
     private Set<InspectionTemplateChangeNote> templateChangeNotes;
 
 
-    public void addTemplateChangeNote(InspectionTemplateChangeNote inspectionTemplateChangeNote) {
-        if (templateChangeNotes == null) templateChangeNotes = new HashSet<>();
-        templateChangeNotes.add(inspectionTemplateChangeNote);
-
-        Set<InspectionPlanChangeNote> inspectionPlanChangeNotes = inspectionTemplateChangeNote.getInspectionPlanChangeNotes();
-
-        if (inspectionPlanChangeNotes == null || !inspectionPlanChangeNotes.contains(this)) {
-            inspectionTemplateChangeNote.addInspectionPlanChangeNote(this);
-        }
-    }
+//    public void addTemplateChangeNote(InspectionTemplateChangeNote inspectionTemplateChangeNote) {
+//        if (templateChangeNotes == null) templateChangeNotes = new HashSet<>();
+//        templateChangeNotes.add(inspectionTemplateChangeNote);
+//
+//        Set<InspectionPlanChangeNote> inspectionPlanChangeNotes = inspectionTemplateChangeNote.getInspectionPlanChangeNotes();
+//
+//        if (inspectionPlanChangeNotes == null || !inspectionPlanChangeNotes.contains(this)) {
+//            inspectionTemplateChangeNote.addInspectionPlanChangeNote(this);
+//        }
+//    }
 }

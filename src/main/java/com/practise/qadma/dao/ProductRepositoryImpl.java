@@ -69,9 +69,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public Product save(Product product) {
 
-        entityManager.persist(product);
-
-        return product;
+        return   entityManager.merge(product);
     }
 
 
@@ -134,13 +132,13 @@ public class ProductRepositoryImpl implements ProductRepository {
             if (predicate != null) predicates.add(predicate);
         }
 
-        if (productSearchCriteria.getCreatedBy() > 0) {
-            Predicate createdBy = cb.equal(root.get("creatorId"), productSearchCriteria.getCreatedBy());
+        if (productSearchCriteria.getCreatedBy() != null && productSearchCriteria.getCreatedBy().getId() > 0) {
+            Predicate createdBy = cb.equal(root.get("creatorId"), productSearchCriteria.getCreatedBy().getId());
             predicates.add(createdBy);
         }
 
-        if (productSearchCriteria.getModifiedBy() > 0) {
-            Predicate modifiedBy = cb.equal(root.get("modifierId"), productSearchCriteria.getModifiedBy());
+        if (productSearchCriteria.getModifiedBy() != null && productSearchCriteria.getModifiedBy().getId() > 0) {
+            Predicate modifiedBy = cb.equal(root.get("modifierId"), productSearchCriteria.getModifiedBy().getId());
             predicates.add(modifiedBy);
         }
 

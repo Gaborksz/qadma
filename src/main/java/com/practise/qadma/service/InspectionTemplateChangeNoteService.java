@@ -1,14 +1,11 @@
 package com.practise.qadma.service;
 
-import com.practise.qadma.entity.ArchivedInspectionTemplate;
 import com.practise.qadma.entity.InspectionTemplate;
 import com.practise.qadma.entity.InspectionTemplateChangeNote;
+import com.practise.qadma.payload.InspectionTemplateChangeNoteDTO;
+import com.practise.qadma.payload.view.InspectionTemplateChangeNoteViewDTO;
 
 public interface InspectionTemplateChangeNoteService {
 
-    InspectionTemplateChangeNote createChangeNoteForNewTemplate(InspectionTemplate inspectionTemplate);
-
-    InspectionTemplateChangeNote save(InspectionTemplateChangeNote changeNote);
-
-    InspectionTemplateChangeNote saveAndFlush(InspectionTemplateChangeNote changeNote);
+    InspectionTemplateChangeNoteViewDTO save(InspectionTemplateChangeNoteDTO changeNote);
 }

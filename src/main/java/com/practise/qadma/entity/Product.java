@@ -54,7 +54,7 @@ public class Product {
     @Transient
     private QadmaUser modifiedBy;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inspection_plan_id")
     private InspectionPlan inspectionPlan;
 

@@ -1,5 +1,6 @@
 package com.practise.qadma.payload;
 
+import com.practise.qadma.auth.payload.QadmaUserDTO;
 import com.practise.qadma.enums.DateFilterSelector;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class ProductSearchCriteriaDTO {
     private DateFilterSelector dateModifiedSelector;
     private Date dateModifiedFrom;
     private Date dateModifiedTo;
-    private long createdBy;
-    private long modifiedBy;
+    private QadmaUserDTO createdBy;
+    private QadmaUserDTO modifiedBy;
     private InspectionPlanDTO inspectionPlanId;
 }

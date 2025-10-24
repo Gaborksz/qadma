@@ -2,13 +2,14 @@ package com.practise.qadma.service;
 
 import com.practise.qadma.entity.Product;
 import com.practise.qadma.payload.ProductSearchCriteriaDTO;
+import com.practise.qadma.payload.view.ProductViewDTO;
 
 import java.util.List;
 import java.util.Set;
 
 public interface ProductService {
 
-    Product findById(long id);
+    ProductViewDTO findById(long id);
 
     Set<Product> getProductsByInspectionTemplateId(long id);
 
@@ -20,7 +21,7 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    Set<Product> search(ProductSearchCriteriaDTO searchCriteria);
+    Set<ProductViewDTO> search(ProductSearchCriteriaDTO searchCriteria);
 
     Set<Product> populateUserFields(Set<Product> products);
 }

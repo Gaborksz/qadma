@@ -29,8 +29,8 @@ public class ArchivedInspectionTemplate {
     @Column(name = "date_created")
     private Date dateCreated;
 
-    @Column(name = "created_by")
-    private long createdBy;
+    @Column(name = "created_by_userid")
+    private long creatorId;
 
     @Column(name = "attribute_inspection")
     private boolean attributeInspection;

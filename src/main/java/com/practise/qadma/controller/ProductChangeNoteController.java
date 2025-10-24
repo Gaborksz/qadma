@@ -1,6 +1,5 @@
 package com.practise.qadma.controller;
 
-import com.practise.qadma.mappingservice.ProductChangeNoteMappingService;
 import com.practise.qadma.payload.ProductChangeNoteDTO;
 import com.practise.qadma.payload.view.ProductChangeNoteViewDTO;
 import com.practise.qadma.service.ProductChangeNoteService;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -17,9 +16,6 @@ import java.util.Set;
 @Table(name = "inspection_template_change_note")
 public class InspectionTemplateChangeNote extends ChangeNote {
 
-    @ManyToMany(mappedBy = "templateChangeNotes")
-    Set<InspectionPlanChangeNote> inspectionPlanChangeNotes;
-
     @OneToOne
     @JoinColumn(name = "inspection_template_id")
     private InspectionTemplate inspectionTemplate;
@@ -28,21 +24,12 @@ public class InspectionTemplateChangeNote extends ChangeNote {
     @JoinColumn(name = "archived_inspection_template_id")
     private ArchivedInspectionTemplate archivedInspectionTemplate;
 
-    @Transient
+    @ManyToMany
+    @JoinTable(name = "insp_temp_change_note_product",
+            joinColumns = @JoinColumn(name = "insp_temp_change_note_id" ,referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private Set<Product> productsToUpdate;
 
     @Transient
     private int templateSequenceNumber;
-
-    public void addInspectionPlanChangeNote(InspectionPlanChangeNote inspectionPlanChangeNote) {
-
-        if (inspectionPlanChangeNotes == null) inspectionPlanChangeNotes = new HashSet<>();
-        inspectionPlanChangeNotes.add(inspectionPlanChangeNote);
-
-        Set<InspectionTemplateChangeNote> inspectionTemplateChangeNotes = inspectionPlanChangeNote.getTemplateChangeNotes();
-
-        if (inspectionTemplateChangeNotes == null || !inspectionTemplateChangeNotes.contains(this)) {
-            inspectionPlanChangeNote.addTemplateChangeNote(this);
-        }
-    }
 }

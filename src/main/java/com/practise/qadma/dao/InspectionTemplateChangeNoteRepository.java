@@ -6,5 +6,4 @@ public interface InspectionTemplateChangeNoteRepository {
 
     InspectionTemplateChangeNote save(InspectionTemplateChangeNote changeNote);
 
-    InspectionTemplateChangeNote saveAndFlush(InspectionTemplateChangeNote changeNote);
 }
