@@ -6,13 +6,14 @@ import com.practise.qadma.dao.ProductRepository;
 import com.practise.qadma.entity.Product;
 import com.practise.qadma.exception.ItemNotFoundException;
 import com.practise.qadma.payload.ProductSearchCriteriaDTO;
+import com.practise.qadma.payload.view.ProductViewDTO;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,20 +22,32 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final QadmaUserService qadmaUserService;
+    private final ModelMapper modelMapper;
 
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, QadmaUserService qadmaUserService) {
+    public ProductServiceImpl(ProductRepository productRepository, QadmaUserService qadmaUserService, ModelMapper modelMapper) {
         this.productRepository = productRepository;
         this.qadmaUserService = qadmaUserService;
+        this.modelMapper = modelMapper;
     }
 
 
     @Override
-    public Product findById(long id) {
+    public ProductViewDTO findById(long id) {
 
-        return productRepository.findById(id)
-                .orElseThrow(() -> new ItemNotFoundException(id, "Product"));
+        Optional<Product> product = productRepository.findById(id);
+
+        if (product.isEmpty()) {
+            throw new ItemNotFoundException(id, "Product");}
+
+        Set<Product> products = new HashSet<>();
+        products.add(product.get());
+        populateUserFields(products);
+
+        Product  productWithUserData = products.stream().findFirst().get();
+
+        return modelMapper.map(productWithUserData, ProductViewDTO.class);
     }
 
 
@@ -71,11 +84,14 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Set<Product> search(ProductSearchCriteriaDTO searchCriteria) {
+    public Set<ProductViewDTO> search(ProductSearchCriteriaDTO searchCriteria) {
 
         Set<Product> products = productRepository.search(searchCriteria);
+        Set<Product> productsWithUserData = populateUserFields(products);
 
-        return populateUserFields(products);
+        return productsWithUserData.stream()
+                .map(product -> modelMapper.map(product, ProductViewDTO.class))
+                .collect(Collectors.toSet());
     }
 
     public Set<Product> populateUserFields(Set<Product> products) {

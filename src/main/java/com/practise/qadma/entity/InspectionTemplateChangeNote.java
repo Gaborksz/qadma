@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -16,23 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "inspection_template_change_note")
-public class InspectionTemplateChangeNote {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "created_by")
-    private long createdBy;
-
-    @Column(name = "date_created")
-    private Date dateCreated;
-
-    @Column(name = "description")
-    private String changeDescription;
-
-    @ManyToMany(mappedBy = "templateChangeNotes")
-    Set<InspectionPlanChangeNote> inspectionPlanChangeNotes;
+public class InspectionTemplateChangeNote extends ChangeNote {
 
     @OneToOne
     @JoinColumn(name = "inspection_template_id")
@@ -42,22 +24,12 @@ public class InspectionTemplateChangeNote {
     @JoinColumn(name = "archived_inspection_template_id")
     private ArchivedInspectionTemplate archivedInspectionTemplate;
 
-    @Transient
+    @ManyToMany
+    @JoinTable(name = "insp_temp_change_note_product",
+            joinColumns = @JoinColumn(name = "insp_temp_change_note_id" ,referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     private Set<Product> productsToUpdate;
 
     @Transient
     private int templateSequenceNumber;
-
-
-    public void addInspectionPlanChangeNote(InspectionPlanChangeNote inspectionPlanChangeNote) {
-
-        if (inspectionPlanChangeNotes == null) inspectionPlanChangeNotes = new HashSet<>();
-        inspectionPlanChangeNotes.add(inspectionPlanChangeNote);
-
-        Set<InspectionTemplateChangeNote> inspectionTemplateChangeNotes = inspectionPlanChangeNote.getTemplateChangeNotes();
-
-        if (inspectionTemplateChangeNotes == null || !inspectionTemplateChangeNotes.contains(this)) {
-            inspectionPlanChangeNote.addTemplateChangeNote(this);
-        }
-    }
 }

@@ -1,6 +1,8 @@
 package com.practise.qadma.entity;
 
+import com.practise.qadma.auth.entity.QadmaUser;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,14 +29,29 @@ public class InspectionTemplate {
     @Column(name = "revision")
     private int revision;
 
+
+
     @Column(name = "date_created")
     private Date dateCreated;
+
+    @Setter(AccessLevel.PROTECTED)
+    @Column(name = "created_by_userid")
+    private long creatorId;
+
+    @Transient
+    private QadmaUser createdBy;
 
     @Column(name = "date_modified")
     private Date dateModified;
 
-    @Column(name = "created_by")
-    private long createdBy;
+    @Setter(AccessLevel.PROTECTED)
+    @Column(name = "modified_by_userid")
+    long modifierId;
+
+    @Transient
+    private QadmaUser modifiedBy;
+
+
 
     @Column(name = "attribute_inspection")
     private boolean attributeInspection;
@@ -53,4 +70,14 @@ public class InspectionTemplate {
 
     @OneToMany(mappedBy = "inspectionTemplate")
     Set<InspectionTemplateChangeNote> changeNotes;
+
+    public void setCreatedBy(QadmaUser createdBy) {
+        this.createdBy = createdBy;
+        this.creatorId = this.createdBy != null ? this.createdBy.getId() : 0;
+    }
+
+    public void setModifiedBy(QadmaUser modifiedBy) {
+        this.modifiedBy = modifiedBy;
+        this.modifierId = this.modifiedBy != null ? this.modifiedBy.getId() : 0;
+    }
 }

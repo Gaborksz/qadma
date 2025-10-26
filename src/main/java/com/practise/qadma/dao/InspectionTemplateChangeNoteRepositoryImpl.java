@@ -19,15 +19,6 @@ public class InspectionTemplateChangeNoteRepositoryImpl implements InspectionTem
 
     @Override
     public InspectionTemplateChangeNote save(InspectionTemplateChangeNote changeNote) {
-        entityManager.persist(changeNote);
-        return changeNote;
-    }
-
-    @Transactional
-    @Override
-    public InspectionTemplateChangeNote saveAndFlush(InspectionTemplateChangeNote changeNote) {
-        entityManager.persist(changeNote);
-        entityManager.flush();
-        return changeNote;
+        return entityManager.merge(changeNote);
     }
 }

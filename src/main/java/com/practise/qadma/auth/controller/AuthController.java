@@ -88,12 +88,17 @@ public class AuthController {
 
 
     @GetMapping("signout")
-    public String signOut() {
+    public ResponseEntity<Void> signOut(HttpServletResponse response) {
 
-        //TODO
-        // Add token to BlackList that gets verified by the JWTFilter
+        Cookie cookie = new Cookie("jwt", "");
+        cookie.setPath("/"); // must match original cookie path
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); // true if using HTTPS
+        cookie.setMaxAge(0); // delete immediately
+        cookie.setDomain("localhost"); // optional, add if it was set originally
 
-        return "You have successfully signed out";
+        response.addCookie(cookie);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("signedin")

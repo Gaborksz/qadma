@@ -28,8 +28,7 @@ public class InspectionTemplateRepositoryImpl implements InspectionTemplateRepos
     @Override
     public InspectionTemplate save(InspectionTemplate inspectionTemplate) {
 
-        entityManager.persist(inspectionTemplate);
-        return inspectionTemplate;
+        return entityManager.merge(inspectionTemplate);
     }
 
     @Override

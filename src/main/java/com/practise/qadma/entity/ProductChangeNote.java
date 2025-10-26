@@ -1,37 +1,19 @@
 package com.practise.qadma.entity;
 
-import com.practise.qadma.auth.entity.QadmaUser;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
+import lombok.ToString;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 
 @Entity
 @Table(name = "product_change_note")
-public class ProductChangeNote {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(name = "description")
-    private String changeDescription;
-
-    @Column(name = "date_created")
-    private Date dateCreated;
-
-    @Column(name = "created_by_userid")
-    private long creatorId;
-
-    @Transient
-    private QadmaUser createdBy;
+public class ProductChangeNote extends ChangeNote {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -44,16 +26,4 @@ public class ProductChangeNote {
     @OneToOne
     @JoinColumn(name = "plan_change_note_id")
     private InspectionPlanChangeNote inspectionPlanChangeNote;
-
-    public void addTextToChangeDescription(String changeDescription) {
-
-        if (this.changeDescription == null) this.changeDescription = "";
-
-        this.changeDescription = this.changeDescription + "\n" + changeDescription;
-    }
-
-    public void setCreatedBy(QadmaUser createdBy) {
-        this.createdBy = createdBy;
-        this.creatorId = this.createdBy != null ? this.createdBy.getId() : 0;
-    }
 }

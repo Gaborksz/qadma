@@ -14,26 +14,26 @@ import java.util.List;
 @RequestMapping("/api/change-note")
 public class ChangeManagerController {
 
-    private final ChangeManagerMappingService changeManagerMappingService;
-
-    @Autowired
-    public ChangeManagerController(ChangeManagerMappingService changeManagerMappingService) {
-        this.changeManagerMappingService = changeManagerMappingService;
-    }
-
-    @PostMapping("/inspection-plan")
-    public List<InspectionPlanChangeNoteViewDTO> processInspectionPlanChangeNote(
-            @RequestBody InspectionPlanChangeNoteDTO inspectionPlanChangeNoteDTO) {
-
-        return changeManagerMappingService.processInspectionPlanChangeNote(inspectionPlanChangeNoteDTO);
-    }
-
-    @PostMapping("/product")
-    public List<ProductChangeNoteViewDTO> processProductChangeNote(
-            @RequestBody ProductChangeNoteDTO productChangeNoteDTO) {
-
-        System.out.println(productChangeNoteDTO);
-
-        return changeManagerMappingService.processProductChangeNote(productChangeNoteDTO);
-    }
+//    private final ChangeManagerMappingService changeManagerMappingService;
+//
+//    @Autowired
+//    public ChangeManagerController(ChangeManagerMappingService changeManagerMappingService) {
+//        this.changeManagerMappingService = changeManagerMappingService;
+//    }
+//
+//    @PostMapping("/inspection-plan")
+//    public List<InspectionPlanChangeNoteViewDTO> processInspectionPlanChangeNote(
+//            @RequestBody InspectionPlanChangeNoteDTO inspectionPlanChangeNoteDTO) {
+//
+//        return changeManagerMappingService.processInspectionPlanChangeNote(inspectionPlanChangeNoteDTO);
+//    }
+//
+//    @PostMapping("/product")
+//    public List<ProductChangeNoteViewDTO> processProductChangeNote(
+//            @RequestBody ProductChangeNoteDTO productChangeNoteDTO) {
+//
+//        System.out.println(productChangeNoteDTO);
+//
+//        return changeManagerMappingService.processProductChangeNote(productChangeNoteDTO);
+//    }
 }

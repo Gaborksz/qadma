@@ -31,7 +31,8 @@ public class ArchivedInspectionTemplateServiceImpl implements ArchivedInspection
         archivedTemplate.setDateCreated(inspectionTemplate.getDateModified());
         archivedTemplate.setId(0);
 
-        return archivedInspectionTemplateRepository.archiveTemplate(archivedTemplate);
+        ArchivedInspectionTemplate archivedInspectionTemplate = archivedInspectionTemplateRepository.archiveTemplate(archivedTemplate);
+        return archivedInspectionTemplate;
     }
 
 

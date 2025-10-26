@@ -74,7 +74,6 @@ public class JWTFilter extends OncePerRequestFilter {
 
         return List.of(
                 QadmaApplication.BASEURL + "/api/auth/signup",
-                QadmaApplication.BASEURL + "/api/auth/signout",
                 QadmaApplication.BASEURL + "/api/auth/user-name");
     }
 }

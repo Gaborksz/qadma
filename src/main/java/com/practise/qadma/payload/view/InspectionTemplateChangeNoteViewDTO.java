@@ -1,6 +1,7 @@
 package com.practise.qadma.payload.view;
 
-import com.practise.qadma.payload.ArchivedProductDTO;
+import com.practise.qadma.auth.payload.QadmaUserDTO;
+import com.practise.qadma.payload.InspectionTemplateDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,10 +16,9 @@ import java.util.Set;
 public class InspectionTemplateChangeNoteViewDTO {
 
     private long id;
-    private long createdBy;
+    private QadmaUserDTO createdBy;
     private Date dateCreated;
     private String changeDescription;
-    private long archivedInspectionTemplateId;
-    private String archivedInspectionTemplateTitle;
-    private Set<ArchivedProductDTO> productsToUpdate;
+    private InspectionTemplateDTO inspectionTemplate;
+    private Set<ProductViewDTO> productsToUpdate;
 }
